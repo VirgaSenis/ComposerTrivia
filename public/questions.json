@@ -1,0 +1,43 @@
+[ 
+	{ 
+		"link": "/audio/01.mp3", 
+		"composer": "Antonio Vivaldi",
+		"title": "Concerto No. 4 in F minor, 'Winter', 2nd Movement" 
+	}, { 
+		"link": "/audio/02.mp3", 
+		"composer": "Frederic Chopin",
+		"title": "Fantaisie-Impromptu" 
+	}, {
+		"link": "/audio/03.mp3",
+		"composer": "Wolfgang Amadeus Mozart",
+		"title": "Eine Kleine Nachtmusik"
+	}, {
+		"link": "/audio/04.mp3",
+		"composer": "Ludwig van Beethoven",
+		"title": "Symphony No. 5 in C minor"
+	}, {
+		"link": "/audio/05.mp3",
+		"composer": "Joseph Haydn",
+		"title": "Symphony No. 94, 'Surprise', 2nd Movement"
+	}, {
+		"link": "/audio/06.mp3",
+		"composer": "Pyotr Ilyich Tchaikovsky",
+		"title": "1812 Overture"
+	}, {
+		"link" : "/audio/07.mp3",
+		"composer": "Gustav Holst",
+		"title": "Jupiter, the Bringer of Jollity"
+	}, {
+		"link": "/audio/08.mp3",
+		"composer": "Antonin Dvorak",
+		"title": "Symphony No. 9, 'From the New World', 2nd Movement"
+	}, {
+		"link": "/audio/09.mp3",
+		"composer": "Franz Schubert",
+		"title": "Ellens dritter Gesang"
+	}, {
+		"link": "audio/10.mp3",
+		"composer": "Johann Pachelbel",
+		"title": "Canon in D"
+	}
+]

@@ -1,0 +1,17 @@
+<div ng-if='isShown' class="col-lg-6 col-lg-offset-3 text-center fade">
+	<h3 class="text-center">Score: {{ score }} / {{ numberOfQuestions }}</h3>
+
+	<audio controls ng-src="{{ url }}">
+	</audio><br/>
+
+	<div>
+		<p id="feedback" class="fade-in-out" data-ng-bind="feedback"></p>
+	</div><br/>
+
+	<choices class="text-center">
+		<div class="choice repeated-item" data-ng-repeat="choice in choices" data-ng-click="postAnswer(choice)">
+			<p>{{choice}}</p>
+		</div>	
+	</choices>
+
+</div>

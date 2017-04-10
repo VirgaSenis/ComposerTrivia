@@ -1,0 +1,61 @@
+body {
+	margin: 0;
+}
+
+footer {
+	position: fixed;
+	bottom: 0;
+	border-top-style: solid;
+	margin-top: 10px;
+}
+
+.banner {
+	background-image: url("../images/banner1.jpg");
+	background-size: cover;
+	text-shadow: text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+	color: white;
+}
+
+.choice {
+	display: inline-block;
+	width: 200px;
+	height: 40px;
+	background-color: gray;
+	margin: 5px;
+}
+
+.choice p {
+	position: relative;
+	top: 30%;	
+}
+
+.choice:hover {
+	background-color: orange;
+}
+
+#feedback {
+	-webkit-transition: opacity .5s ease-in-out;
+   -moz-transition: opacity .5s ease-in-out;
+   -ms-transition: opacity .5s ease-in-out;
+   -o-transition: opacity .5s ease-in-out;
+   transition: opacity .5s ease-in-out;
+}
+
+.fade {
+	opacity: 1;
+}
+
+.fade.ng-enter, .fade.ng-leave {
+  transition: all linear 1s 1s;
+}
+
+.fade.ng-enter, 
+.fade.ng-leave.ng-leave-active {
+	opacity: 0;
+}
+
+/* The finishing CSS styles for the enter animation */
+.fade.ng-leave, 
+.fade.ng-enter.ng-enter-active {
+	opacity: 1;
+}
