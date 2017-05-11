@@ -26,14 +26,14 @@ function loadData() {
 }
 
 function loadComposers() {
-	var pathname = path.join(__dirname + '/public/composers.txt');
+	var pathname = path.join(__dirname + '/composers.txt');
 	var data = fs.readFileSync(pathname, 'utf8');
 	composers = data.split('\r\n');
 	composers.splice(-1, 1); 
 }
 
 function loadQuestions() {
-	var pathname = path.join(__dirname + '/public/questions.json');
+	var pathname = path.join(__dirname + '/questions.json');
 	questions = JSON.parse(fs.readFileSync(pathname, 'utf8'));
 }
 
@@ -66,21 +66,24 @@ app.get('/', function(req, res) {
 
 });
 
-app.post('/playerName', function(req, res) {
-	console.log('request for /init receieved.');
+app.post('/user', function(req, res) {
+	console.log('POST /user requested.');
+	var user = req.body;
 
-	var playerName = req.body.playerName;
-	isProfaneWord(playerName, function(isProfane) {
-		if (isProfane == true) {
-			console.log('dirty person!');
-			res.send({ isProfane: true });
-		} else {
-			console.log('clean!');	
-			req.session.questionNumber = 1;
-			req.session.score = 0;
-		}
+	isProfaneWord(user.name, function(isProfane) {
+		var data = {};
+		data.isAvailable = (isProfane == true) ? false : true;
+		res.send(data);
 		res.end();
 	})
+});
+
+app.get('/init', function(req, res) {
+	console.log('GET /init requested.');
+	var session = req.session;
+
+	session.questionNumber = 1;
+	session.score = 0;
 });
 
 app.get('/question', function(req, res) {
