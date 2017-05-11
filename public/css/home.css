@@ -1,61 +1,70 @@
-body {
-	margin: 0;
-}
-
-footer {
+.fullscreen {
 	position: fixed;
+	top: 0;
+	right: 0;
 	bottom: 0;
-	border-top-style: solid;
-	margin-top: 10px;
+	left: 0;
+	overflow: hidden;
+	z-index: -100;
 }
 
-.banner {
-	background-image: url("../images/banner1.jpg");
-	background-size: cover;
-	text-shadow: text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+.fullscreen-vid {
+	position:absolute;
+	top:0; left:0;
+	width:130%;
+	height:100%;
+	opacity: 0.5;
+}
+
+@media (min-aspect-ratio: 16/9) {
+	.fullscreen-vid {
+		height: 300%;
+		top: -100%;
+	}
+}
+
+@media (max-aspect-ratio: 16/9) {
+	.fullscreen-vid {
+		width: 300%;
+		left: -100%;
+	}
+}
+
+.vertical-center {
+	min-height: 100%;
+	min-height: 100vh;
+
+	display: flex;
+	align-items: center;
+}
+
+.heading {
 	color: white;
+	text-shadow: 1px 1px black;
 }
 
-.choice {
-	display: inline-block;
-	width: 200px;
-	height: 40px;
-	background-color: gray;
-	margin: 5px;
+.boxed {
+	background-color: white;
+	color:black;
+	border-radius: 5px;
+	padding: 20px;
 }
 
-.choice p {
-	position: relative;
-	top: 30%;	
+.heading > h1 {
+	font-size: 400%;
 }
 
-.choice:hover {
-	background-color: orange;
-}
+/* For mobile */
+@media only screen and (max-width: 767px) {
+	.fullscreen {
+		background: url('../images/banner1.jpg') center center / cover no-repeat;
+	}
 
-#feedback {
-	-webkit-transition: opacity .5s ease-in-out;
-   -moz-transition: opacity .5s ease-in-out;
-   -ms-transition: opacity .5s ease-in-out;
-   -o-transition: opacity .5s ease-in-out;
-   transition: opacity .5s ease-in-out;
-}
+	.fullscreen-vid {
+		display: none;
+	}
 
-.fade {
-	opacity: 1;
-}
-
-.fade.ng-enter, .fade.ng-leave {
-  transition: all linear 1s 1s;
-}
-
-.fade.ng-enter, 
-.fade.ng-leave.ng-leave-active {
-	opacity: 0;
-}
-
-/* The finishing CSS styles for the enter animation */
-.fade.ng-leave, 
-.fade.ng-enter.ng-enter-active {
-	opacity: 1;
+	.vertical-center {
+		display: block;
+	}
 }

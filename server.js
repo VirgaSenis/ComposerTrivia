@@ -4,6 +4,7 @@ var session = require('express-session');
 var express = require('express');
 var bodyParser = require('body-parser');
 var app = express();
+var http = require('http');
 
 
 app.use(bodyParser.urlencoded({extended: false}));
@@ -44,25 +45,49 @@ function runServer() {
 loadData();
 runServer();
 
+function isProfaneWord(word, callback) {
+	var url = 'http://www.purgomalum.com/service/containsprofanity?text='+word
+
+	console.log('checking profanity');
+	var req = http.get(url, function(res) {
+		console.log('Status:' + res.statusCode);
+
+		res.on('data', function(chunk) {
+			console.log(chunk.toString('utf8'));
+			var isProfane = chunk.toString('utf8');
+			callback(isProfane);
+		});
+	});
+}
+
 app.get('/', function(req, res) {
 	console.log('request for / receieved.');
 	res.sendFile( path.join(__dirname + '/public/home.html') );
 
 });
 
-app.post('/init', function(req, res) {
+app.post('/playerName', function(req, res) {
 	console.log('request for /init receieved.');
 
-	req.session.questionNumber = 1;
-	req.session.score = 0;
-
-	res.send('ok');
+	var playerName = req.body.playerName;
+	isProfaneWord(playerName, function(isProfane) {
+		if (isProfane == true) {
+			console.log('dirty person!');
+			res.send({ isProfane: true });
+		} else {
+			console.log('clean!');	
+			req.session.questionNumber = 1;
+			req.session.score = 0;
+		}
+		res.end();
+	})
 });
 
 app.get('/question', function(req, res) {
 	console.log('request for GET /question receieved.');
 	var session = req.session;
 
+	console.log(session.questionNumber);
 
 	if (session.questionNumber >= NUMBER_OF_QUESTIONS) {
 		console.log('game finished');
@@ -72,9 +97,10 @@ app.get('/question', function(req, res) {
 		var data = {};
 		data.score = session.score + " / " + qIndex;
 		data.questionNumber = session.questionNumber;
-		data.url = google_drive_url + questions[qIndex].id;
+		data.url = google_drive_url + questions[qIndex+1].id;
 		data.choices = getQuestionChoices(qIndex);
 
+		console.log(data.url);
 		res.send(data);
 	}
 
