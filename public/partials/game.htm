@@ -1,7 +1,8 @@
 <div ng-if='isShown' class="col-lg-6 col-lg-offset-3 text-center fade">
-	<h3 class="text-center">Score: {{ score }} / {{ numberOfQuestions }}</h3>
+	<h3 class="text-center">Score: {{ score }}</h3>
 
-	<audio controls ng-src="{{ url }}">
+	<audio pause-audio='paused' controls autoplay>
+		<source id='audio' ng-src='{{url}}' type='audio/mp3'> 
 	</audio><br/>
 
 	<div>
