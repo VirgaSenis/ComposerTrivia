@@ -22,8 +22,6 @@ app.controller({
 	'HomeController': HomeController
 });
 
-app.directive('nameValidate', nameValidate);
-
 app.directive('pauseAudio', function() {
 	function link(scope, element, attrs) {
 		scope.$watch(attrs.pauseAudio, function(value) {

@@ -39,19 +39,20 @@
 }
 
 .heading {
-	color: white;
-	text-shadow: 1px 1px black;
+	padding-right: 30px;
+	/*text-shadow: 1px 1px black;*/
 }
 
-.boxed {
+.form-box {
+	height: 200px;
 	background-color: white;
-	color:black;
+	border: 1px solid black;
 	border-radius: 5px;
 	padding: 20px;
 }
 
 .heading > h1 {
-	font-size: 400%;
+	font-size: 50px;
 }
 
 /* For mobile */

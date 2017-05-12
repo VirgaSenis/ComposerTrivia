@@ -53,15 +53,15 @@ function isProfaneWord(word, callback) {
 		console.log('Status:' + res.statusCode);
 
 		res.on('data', function(chunk) {
-			console.log(chunk.toString('utf8'));
 			var isProfane = chunk.toString('utf8');
+			
 			callback(isProfane);
 		});
 	});
 }
 
 app.get('/', function(req, res) {
-	console.log('request for / receieved.');
+	console.log('GET / requested.');
 	res.sendFile( path.join(__dirname + '/public/home.html') );
 
 });
@@ -72,7 +72,8 @@ app.post('/user', function(req, res) {
 
 	isProfaneWord(user.name, function(isProfane) {
 		var data = {};
-		data.isAvailable = (isProfane == true) ? false : true;
+		data.isAvailable = (isProfane == 'true') ? false : true;
+
 		res.send(data);
 		res.end();
 	})
@@ -84,6 +85,8 @@ app.get('/init', function(req, res) {
 
 	session.questionNumber = 1;
 	session.score = 0;
+
+	res.end();
 });
 
 app.get('/question', function(req, res) {
@@ -100,7 +103,7 @@ app.get('/question', function(req, res) {
 		var data = {};
 		data.score = session.score + " / " + qIndex;
 		data.questionNumber = session.questionNumber;
-		data.url = google_drive_url + questions[qIndex+1].id;
+		data.url = google_drive_url + questions[qIndex].id;
 		data.choices = getQuestionChoices(qIndex);
 
 		console.log(data.url);

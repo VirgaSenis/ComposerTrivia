@@ -1,6 +1,6 @@
 <div class="container-fluid">
 	<div class='fullscreen'>
-		<video class='fullscreen-vid' poster='self.jpg' muted loop autoplay>
+		<video class='fullscreen-vid' muted loop autoplay>
 			<source src='http://webm.land/media/EJTK.webm' type='video/webm'>
 		</video>
 	</div>
@@ -12,15 +12,14 @@
 			<p class='lead'>Listen to some classical music, and see if you can tell the composer!</p>
 		</div>
 
-		<div class='boxed col-lg-2'>
-			<form name='playForm' ng-submit='post()'>
+		<div class='form-box col-lg-2'>
+			<form name='userForm' ng-submit='playGame()'>
 				<div class='form-group has-feedback' ng-class='feedback'>
-					<label for='playerName'>What is your name?</label></br>
-					<input type='text' class='form-control' name='playerName' ng-model='playerName' required> 	
-					<span ng-class='glyphicon' class="glyphicon form-control-feedback"></span>
+					<label for='userName'>What is your name?</label></br>
+					<input type='text' class='form-control' name='userName' ng-model='user.name' ng-model-options='{ debounce: 500 }' ng-change='isAvailable()' ng-keyup='cancel($event)' required>
 					<span ng-bind='message'></span>
 				</div>
-				<input type='submit' class='btn btn-success btn-block' value='Play!'>
+				<input type='submit' ng-disabled='userForm.userName.$invalid	' class='btn btn-success btn-block' value='Play!'>
 			</form>
 
 		</div>	
