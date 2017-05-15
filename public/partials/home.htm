@@ -1,23 +1,23 @@
 <div class="container-fluid">
-	<div class='fullscreen'>
-		<video class='fullscreen-vid' muted loop autoplay>
+	<div class='background'>
+		<video class='background-vid' muted loop autoplay>
 			<source src='http://webm.land/media/EJTK.webm' type='video/webm'>
 		</video>
 	</div>
 
 	<div class="row vertical-center">
-		<div class="heading col-lg-4 col-lg-offset-3 col-xs-12">
+		<div class="heading col-xs-12 col-lg-4 col-lg-offset-3 ">
 			<h1 class='font-lg'>Composer Trivia</h1>
-			<hr class="my-4">
+			<hr>
 			<p class='lead'>Listen to some classical music, and see if you can tell the composer!</p>
 		</div>
 
-		<div class='form-box col-lg-2'>
+		<div class='form-box col-xs-12 col-lg-2'>
 			<form name='userForm' ng-submit='playGame()'>
 				<div class='form-group has-feedback' ng-class='feedback'>
 					<label for='userName'>What is your name?</label></br>
 					<input type='text' class='form-control' name='userName' ng-model='user.name' ng-model-options='{ debounce: 500 }' ng-change='isAvailable()' ng-keyup='cancel($event)' required>
-					<span ng-bind='message'></span>
+					<span class='error-message' ng-bind='errorMessage'></span>
 				</div>
 				<input type='submit' ng-disabled='userForm.userName.$invalid	' class='btn btn-success btn-block' value='Play!'>
 			</form>

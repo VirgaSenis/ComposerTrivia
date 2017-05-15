@@ -14,18 +14,17 @@ function HomeController($scope, $http, $window, $location) {
 		$scope.userForm.userName.$setValidity('', false);	// set false until validated
 
 		$http.post('user', { name: $scope.user.name })
-		.then(function successCallback(response) {
+		.then(function(response) {
 			if (response.data.isAvailable == false) {
 				$scope.feedback = 'has-error';
-				$scope.message = 'No profanity please!';
+				$scope.errorMessage = 'No profanity please!';
 				$scope.userForm.userName.$setValidity('', false);
 			} else {
-				$scope.feedback = 'has-success';
+				var isEmpty = $scope.userForm.userName.$error.required;
+				$scope.feedback = (isEmpty == true) ? 'has-warning' : 'has-success';
 				$scope.message = '';
 				$scope.userForm.userName.$setValidity('', true);
 			}
-		}, function errorCallback(response) {
-
 		});		
 	}
 
