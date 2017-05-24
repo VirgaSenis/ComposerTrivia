@@ -1,45 +1,5 @@
-/* Mobile First Responsive Design */
-.background {
-	position: fixed;
-	top: 0; bottom: 0;
-	left: 0; right: 0;
-	z-index: -100;
-	opacity: 0.5;
-	background: url('../images/background.jpg') center center / cover no-repeat;
-}
-
-.background-vid {
-	display: none;
-}
-
 /* Styles for non-mobile screens */
 @media only screen and (min-width: 768px) {
-	.background {
-		overflow: hidden;
-		background: none;
-	}
-
-	.background-vid {
-		display: block;
-		position:absolute;
-		top:0; left:0;
-		width:130%;
-		height:100%;
-	}
-
-	@media (min-aspect-ratio: 16/9) {
-		.background-vid {
-			height: 300%;
-			top: -100%;
-		}
-	}
-
-	@media (max-aspect-ratio: 16/9) {
-		.background-vid {
-			width: 300%;
-			left: -100%;
-		}
-	}
 
 	.heading {
 		padding-right: 30px;

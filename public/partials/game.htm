@@ -1,18 +1,35 @@
-<div ng-if='isShown' class="col-lg-6 col-lg-offset-3 text-center fade">
-	<h3 class="text-center">Score: {{ score }}</h3>
-
-	<audio pause-audio='paused' controls autoplay>
-		<source id='audio' ng-src='{{url}}' type='audio/mp3'> 
-	</audio><br/>
-
-	<div>
-		<p id="feedback" class="fade-in-out" data-ng-bind="feedback"></p>
-	</div><br/>
-
-	<choices class="text-center">
-		<div class="choice repeated-item" data-ng-repeat="choice in choices" data-ng-click="postAnswer(choice)">
-			<p>{{choice}}</p>
-		</div>	
-	</choices>
-
+<div class='row top-info text-center'>
+	<a class='col-xs-5 col-md-3' href='#/'>ComposerTrivia</a>
+	<span class='col-xs-offset-2 col-xs-3 col-md-offset-3 col-md-2'>{{username}}</span>
+	<span class='col-xs-2 col-md-1'>{{ score }}</span>
 </div>
+
+<div class="text-center">
+	<div class='row'>
+		<div class='col-xs-12'>
+			<h3>Question {{ questionNumber }}</h3>
+			<audio id='audio' ng-src='{{ url }}' type='audio/mp3' pause-audio='hasAnswered' controls autoplay>
+			</audio>
+		</div>
+	</div>
+
+	<div class='row'>
+		<div class='col-xs-12 col-md-offset-3 col-md-6'>
+			<div class='col-xs-12 col-md-12' ng-repeat="choice in choices">
+			<div class='choice'
+				ng-click="!hasAnswered && postAnswer(choice)"
+				ng-class='{ clickable: !hasAnswered,
+							opaque: hasAnswered && !(isCorrectChoice(choice) || isIncorrectChoice(choice)),
+						   "correct-choice": isCorrectChoice(choice), 
+						   "incorrect-choice": isIncorrectChoice(choice) }'>
+				<span>{{choice}}</span>
+			</div>
+			</div>
+		</div>
+	</div>
+
+	<div class='row text-center' ng-if='hasAnswered'>
+		<button class='btn btn-primary btn-lg col-xs-offset-4 col-xs-4 col-md-offset-7 col-md-2' ng-click='goNext()'>Next</button>
+	</div>
+</div>
+

@@ -1,5 +1,5 @@
 function HomeController($scope, $http, $window, $location) {
-	console.log('MainController');
+	$scope.testBind = 'it\'s alive!';
 
 	$scope.playGame = function() {
 		if ($scope.userForm.$valid == true) {

@@ -1,43 +1,83 @@
+.top-info {
+	background: linear-gradient(black, #464242);
+	margin: 0px 0px 5px;
+}
+
+
+.top-info > span, .top-info > a {
+	color: white;
+	font-size: 1.6em;
+	padding-left: 5px;
+	padding-right: 5px;
+}
+
+#audio {
+	margin-bottom: 10px;
+}
+
+
 .choice {
-	display: inline-block;
-	width: 200px;
 	height: 40px;
-	background-color: gray;
-	margin: 5px;
+	margin: 5px 5px;
+	background: #C2C2C2;
+	background: linear-gradient(white, #C2C2C2);
+	border-bottom: 1px solid gray;
+	border-left: 1px solid gray;
+	border-radius: 5px;
+	cursor: default;
+	font-size: 120%;
 }
 
-.choice p {
-	position: relative;
-	top: 30%;	
+.clickable {
+	cursor: pointer;
 }
 
-.choice:hover {
-	background-color: orange;
+.clickable:hover {
+	background: #C2C2C2;
 }
 
-#feedback {
-	-webkit-transition: opacity .5s ease-in-out;
-   -moz-transition: opacity .5s ease-in-out;
-   -ms-transition: opacity .5s ease-in-out;
-   -o-transition: opacity .5s ease-in-out;
-   transition: opacity .5s ease-in-out;
+.opaque {
+	opacity: 0.5;
 }
 
-.fade {
-	opacity: 1;
+.choice span {
+	position: absolute;
+	width: 100%;
+	top: 50%;
+	left:50%;
+	transform: translate(-50%,-50%);
 }
 
-.fade.ng-enter, .fade.ng-leave {
-  transition: all linear 1s 1s;
+.correct-choice {
+	background: #1DB33B;
 }
 
-.fade.ng-enter, 
-.fade.ng-leave.ng-leave-active {
-	opacity: 0;
+.incorrect-choice {
+	background: #E42B3D;
 }
 
-/* The finishing CSS styles for the enter animation */
-.fade.ng-leave, 
-.fade.ng-enter.ng-enter-active {
-	opacity: 1;
+@media only screen and (min-width: 768px) {
+	.top-info {
+		margin-bottom: 5px;
+	}
+
+	.top-info > a { 
+		font-size: 3em;
+	}
+
+	.top-info > span {
+		top: 25px;
+	}
+
+	.game-background {
+		position: fixed;
+		top: 0; bottom: 0;
+		left: 0; right: 0;
+		opacity: 0.5;
+		background: #C0C0C0;
+	}
+
+	.choice {
+		font-size: 150%;
+	}
 }

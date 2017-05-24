@@ -12,30 +12,27 @@ app.config(function($routeProvider) {
 		})
 		.when('/end', {
 			templateUrl: 'partials/end.htm',
-			// controller: 'EndController'
+			controller: 'EndController'
 		})
 		.otherwise({ redirectTo: '/' });
 });
 
+app.directive('pauseAudio', pauseAudio);
+
 app.controller({
 	'GameController': GameController,
-	'HomeController': HomeController
+	'HomeController': HomeController,
+	'EndController': EndController
 });
 
-app.directive('pauseAudio', function() {
-	function link(scope, element, attrs) {
-		scope.$watch(attrs.pauseAudio, function(value) {
-			console.log('within directive: ' + value);
-			if (value == 'true') {
-				element[0].pause();
-			} else if (value == 'false') {
-				element[0].play();
-			}
-		});
-	}
-
-	return {
-		link: link
-	};
+app.controller('BackgroundController', function($scope, $window, $location) {
+	
+	$scope.$on('$locationChangeSuccess', function(event) {
+		console.log('path='+$location.url());
+		if ($location.url() == '/') {
+			$scope.bgTheme = 'home-bg';
+		} else {
+			$scope.bgTheme = 'other-bg';
+		}
+	});
 });
-

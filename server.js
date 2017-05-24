@@ -5,6 +5,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var app = express();
 var http = require('http');
+var util = require('util');
 
 
 app.use(bodyParser.urlencoded({extended: false}));
@@ -29,7 +30,8 @@ function loadComposers() {
 	var pathname = path.join(__dirname + '/composers.txt');
 	var data = fs.readFileSync(pathname, 'utf8');
 	composers = data.split('\r\n');
-	composers.splice(-1, 1); 
+	composers.splice(-1, 1);
+	console.log('initialComposersLength'+composers.length); 
 }
 
 function loadQuestions() {
@@ -62,7 +64,7 @@ function isProfaneWord(word, callback) {
 
 app.get('/', function(req, res) {
 	console.log('GET / requested.');
-	res.sendFile( path.join(__dirname + '/public/home.html') );
+	res.sendFile( path.join(__dirname + '/public/index.html') );
 
 });
 
@@ -73,6 +75,9 @@ app.post('/user', function(req, res) {
 	isProfaneWord(user.name, function(isProfane) {
 		var data = {};
 		data.isAvailable = (isProfane == 'true') ? false : true;
+		if (isProfane == 'false') {
+			req.session.username = user.name;
+		}
 
 		res.send(data);
 		res.end();
@@ -86,6 +91,7 @@ app.get('/init', function(req, res) {
 	session.questionNumber = 1;
 	session.score = 0;
 
+	res.send({ path: '/play'});
 	res.end();
 });
 
@@ -95,19 +101,26 @@ app.get('/question', function(req, res) {
 
 	console.log(session.questionNumber);
 
-	if (session.questionNumber >= NUMBER_OF_QUESTIONS) {
+	if (session.questionNumber == undefined) {
+		console.log('redirecting..');
+		res.status(303).send({ path: '/' });
+	} else if (session.questionNumber > NUMBER_OF_QUESTIONS) {
 		console.log('game finished');
-		res.status(302).send({ redirect: '#/end'});
+		res.status(303).send({ path: '/end'});
 	} else {
 		var qIndex = session.questionNumber - 1;
 		var data = {};
-		data.score = session.score + " / " + qIndex;
+
+		data.username = session.username;
+		data.questionNumber = session.questionNumber;
+		data.score = session.score + "/" + qIndex;
 		data.questionNumber = session.questionNumber;
 		data.url = google_drive_url + questions[qIndex].id;
 		data.choices = getQuestionChoices(qIndex);
 
-		console.log(data.url);
+		console.log(data.choices);
 		res.send(data);
+		console.log('composersLength='+composers.length);
 	}
 
 	res.end();
@@ -129,44 +142,68 @@ function getQuestionChoices(idx) {
 	}
 
 	// add correct choice at random index
-	addAtRandomIndex(choices, correctChoice);
+	var poppedItem = addAtRandomIndex(choices, correctChoice);
+	composers.push(poppedItem);
 
 	// re-append removed composers
-	composers.concat(choices); 
+	composers = composers.concat(choices); 
 
 	return choices;
 }
 
-function removeElement(list, item) {
-	var idx = list.indexOf(item);
+function removeElement(list, str) {
+	var idx = findIndex(list, str);
 	if (idx != -1) {
 		list.splice(idx, 1);
 	}
 }
 
+function findIndex(list, str) {
+	var pattern = new RegExp(str, 'i');
+	for (var i=0; i<list.length; i++) {
+		if (pattern.test(list[i]) == true) {
+			return i;
+		}
+	}
+
+	return -1;
+}
+
 function addAtRandomIndex(list, item) {
 	var idx = Math.floor(Math.random()*list.length);
+	var poppedItem = list[idx];
 	list[idx] = item;
+	return poppedItem;
 }
 
 
-app.post('/response', function(req, res) {
+app.post('/answer', function(req, res) {
 	console.log('request for POST /answer received.');
 
-	var questionIndex = req.session.questionNumber - 1;
-	req.session.questionNumber++;
+	var qIndex = req.session.questionNumber - 1;
+	
 
 	var data = {};
-	data.title = questions[questionIndex].title;
+	data.title = questions[qIndex].title;
+	data.composer = questions[qIndex].composer;
+	data.isCorrect = (req.body.answer == data.composer);
 
-	if (req.body.response == questions[questionIndex].composer) {
+	if (data.isCorrect) {
 		req.session.score++;
-
-		data.answer = true;
-		res.send(data);
-	} else {
-		data.answer = false;
-		data.composer = questions[questionIndex].composer;
-		res.send(data);
 	}
+
+	req.session.questionNumber++;
+
+	res.send(data);
+	res.end();
+});
+
+app.get('/score', function(req, res) {
+	console.log('GET /score requested.');
+
+	if (req.session.score == undefined) {
+		res.status(303).send({path: '/'})
+	}
+	
+	res.send({ score: req.session.score + '/' + NUMBER_OF_QUESTIONS });
 });
