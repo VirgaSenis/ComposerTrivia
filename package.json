@@ -1,0 +1,28 @@
+{
+  "name": "composertrivia",
+  "version": "1.0.0",
+  "description": "A website for testing your knowledge of classical music.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/virgasenis/composertrivia.git"
+  },
+  "keywords": [],
+  "author": "VirgaSenis",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/virgasenis/composertrivia/issues"
+  },
+  "homepage": "https://github.com/virgasenis/composertrivia#readme",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "express": "^4.15.3",
+    "express-session": "^1.15.3",
+    "http": "0.0.0",
+    "path": "^0.12.7"
+  }
+}
