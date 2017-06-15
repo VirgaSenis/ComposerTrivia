@@ -5,8 +5,6 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var app = express();
 var http = require('http');
-var util = require('util');
-
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
@@ -40,8 +38,7 @@ function loadQuestions() {
 }
 
 function runServer() {
-	app.listen(8080);
-	console.log('listening on 127.0.0.1:8080');
+	app.set('port', (process.env.PORT || 5000));
 }
 
 loadData();
