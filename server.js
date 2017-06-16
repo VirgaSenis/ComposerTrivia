@@ -37,6 +37,7 @@ function loadComposers() {
 
 function loadQuestions() {
 	var pathname = path.join(__dirname + '/questions.json');
+	console.log(pathname);
 	questions = JSON.parse(fs.readFileSync(pathname, 'utf8'));
 }
 
