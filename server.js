@@ -31,7 +31,7 @@ function loadComposers() {
 	console.log(pathname);
 	var data = fs.readFileSync(pathname, 'utf8');
 	console.log(data)
-	composers = data.split('\r\n');
+	composers = data.split(/(\r\n|\n)/);
 	composers.splice(-1, 1);
 	console.log('initialComposersLength'+composers.length); 
 }
