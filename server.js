@@ -6,9 +6,11 @@ var bodyParser = require('body-parser');
 var app = express();
 var http = require('http');
 
+app.set('port', (process.env.PORT || 5000));
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
-app.use(session( { secret: 'Something'}));
+app.use(session( { secret: 'Something',
+				   saveUninitialized: true}));
 app.use(express.static('public'));
 
 var google_drive_url = "https://drive.google.com/uc?id=";
@@ -38,12 +40,8 @@ function loadQuestions() {
 	questions = JSON.parse(fs.readFileSync(pathname, 'utf8'));
 }
 
-function runServer() {
-	app.set('port', (process.env.PORT || 5000));
-}
-
 loadData();
-runServer();
+app.listen(app.get('port'));
 
 function isProfaneWord(word, callback) {
 	var url = 'http://www.purgomalum.com/service/containsprofanity?text='+word
