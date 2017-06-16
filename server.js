@@ -30,6 +30,7 @@ function loadComposers() {
 	var pathname = path.join(process.cwd() + '/composers.txt');
 	console.log(pathname);
 	var data = fs.readFileSync(pathname, 'utf8');
+	console.log(data)
 	composers = data.split('\r\n');
 	composers.splice(-1, 1);
 	console.log('initialComposersLength'+composers.length); 
